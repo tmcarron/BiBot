@@ -1,0 +1,9 @@
+C:\Users\tmcar\source\repos\BiBot\BiBot\bin\Debug\BiBot.exe.config
+C:\Users\tmcar\source\repos\BiBot\BiBot\bin\Debug\BiBot.exe
+C:\Users\tmcar\source\repos\BiBot\BiBot\bin\Debug\BiBot.pdb
+C:\Users\tmcar\source\repos\BiBot\BiBot\obj\Debug\BiBot.csprojAssemblyReference.cache
+C:\Users\tmcar\source\repos\BiBot\BiBot\obj\Debug\BiBot.Form1.resources
+C:\Users\tmcar\source\repos\BiBot\BiBot\obj\Debug\BiBot.Properties.Resources.resources
+C:\Users\tmcar\source\repos\BiBot\BiBot\obj\Debug\BiBot.csproj.GenerateResource.cache
+C:\Users\tmcar\source\repos\BiBot\BiBot\obj\Debug\BiBot.exe
+C:\Users\tmcar\source\repos\BiBot\BiBot\obj\Debug\BiBot.pdb

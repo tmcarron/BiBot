@@ -52,8 +52,17 @@ namespace BiBot
         }
         private void Sequential_Operations()
         {
-            Cursor.Position = textBox1.Location;
-            textBox1.Text = textBox1.Location.ToString();
+            Cursor.Position = new Point(2000, 50); 
+            MouseAndKey.LeftMouseClick(Cursor.Position);
+            Cursor.Position = new Point(2400, 450);
+            MouseAndKey.LeftMouseClick(Cursor.Position);
+            Cursor.Position = new Point(3070, 500);
+            MouseAndKey.LeftMouseClick(Cursor.Position);
+            Task.Delay(1000);
+            Cursor.Position = new Point(3070, 570);
+            MouseAndKey.LeftMouseClick(Cursor.Position);
+
+
         }
     }
 }

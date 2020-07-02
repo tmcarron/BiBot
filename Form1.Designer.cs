@@ -33,6 +33,7 @@
             this.MousePositionYbox = new System.Windows.Forms.TextBox();
             this.reporterBGWorker = new System.ComponentModel.BackgroundWorker();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.SequenceBGWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // Initiate_Button
@@ -71,6 +72,10 @@
             this.textBox1.Size = new System.Drawing.Size(161, 20);
             this.textBox1.TabIndex = 3;
             // 
+            // SequenceBGWorker
+            // 
+            this.SequenceBGWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SequenceBGWorker_DoWork);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -94,6 +99,7 @@
         private System.Windows.Forms.TextBox MousePositionYbox;
         private System.ComponentModel.BackgroundWorker reporterBGWorker;
         private System.Windows.Forms.TextBox textBox1;
+        private System.ComponentModel.BackgroundWorker SequenceBGWorker;
     }
 }
 

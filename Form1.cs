@@ -10,12 +10,17 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Threading;
 using System.Drawing.Imaging;
+using System.Collections;
 
 namespace BiBot
 {
     public partial class Form1 : Form
     {
         bool isInitiated;
+        public ClickActions EricEman = new ClickActions();
+        
+        int sleepTime = 20;
+        
         public Form1()
         {
             InitializeComponent();
@@ -55,17 +60,19 @@ namespace BiBot
         private void Sequential_Operations()
         {
             //points for the mouse to click
-            Point[] points = { new Point(3180,500), new Point(3370,570), new Point(3630,930),new Point(2000, 50) };
+            int[] pointsOfRefresh = { };
+            Point[] clickPoints = { new Point(3180,500), new Point(3370,570), new Point(3630,930), new Point(3829,967),new Point(2365,586)};
             Point[] fillPoints = { new Point(2353, 588) };
             string[] autofill = { "TEST" };
 
-            AutoClick(points);
-            //AutoClick(fillPoints, autofill);
+            AutoClick(clickPoints);
+            
             
 
         }
         private void AutoClick(Point[] points)
         {
+            
             //Making sure clothing order is in the correct size
             if(smallRadio.Checked == true)
             {
@@ -85,49 +92,50 @@ namespace BiBot
             }
 
 
-
+            
             for (int i = 0; i < points.Length; i++)
             {
-                Thread.Sleep(1000);
+                //Checking if an interuption check is necessary 
+
+                for(int j = 0; j < EricEman.interuptionStep.Count; j++)
+                {
+                    if(i == EricEman.interuptionStep[j])
+                    {
+                        CheckRefresh(j);
+                    }
+                }
+                Thread.Sleep(sleepTime);
                 Cursor.Position = points[i];
                 MouseAndKey.LeftMouseClick(Cursor.Position);
                 textBox1.Text = Convert.ToString(i);
 
             }
         }
-        private void AutoClick(Point[] points, string[] autofill)
+        public void CheckRefresh(int stepNum)
         {
-            for (int i = 0; i < points.Length; i++)
+            
+            for(int i = 0; ; i++)
             {
-                Thread.Sleep(1000);
-                if (i == 4) { Thread.Sleep(1000); }
-                Cursor.Position = points[i];
-                MouseAndKey.LeftMouseClick(Cursor.Position);
-                Thread.Sleep(1000);
-                SendKeys.Send(autofill[i]);
-                textBox1.Text = Convert.ToString(i);
+                if(isInitiated == false) { break; }
+                //Hard-coded to work on my second monitor. Will change eventually
+                Bitmap bmpScreenshot = new Bitmap(Screen.AllScreens[1].Bounds.Width, Screen.AllScreens[1].Bounds.Height, PixelFormat.Format32bppArgb);
+                Graphics gfxScreenshot = Graphics.FromImage(bmpScreenshot);
+                gfxScreenshot.CopyFromScreen(Screen.AllScreens[1].Bounds.X, Screen.AllScreens[1].Bounds.Y, 0, 0, Screen.AllScreens[1].Bounds.Size,
+                    CopyPixelOperation.SourceCopy);
 
-
+                Thread.Sleep(sleepTime);
+                Color refreshColor = bmpScreenshot.GetPixel(EricEman.interuptionPoints[stepNum].X,EricEman.interuptionPoints[stepNum].Y);
+                textBox2.Text = "Red Value: "+refreshColor.R+" < "+EricEman.colorValueCheck[stepNum]+" Sleep Time Units: "+i+" Location: "+EricEman.interuptionPoints[stepNum];
+                
+                if(refreshColor.R < EricEman.colorValueCheck[stepNum]) { break; }       
             }
-        }
-        public void CheckRefresh()
-        {
-            //Hard-coded to work on my second monitor. Will change eventually
-            Bitmap bmpScreenshot = new Bitmap(Screen.AllScreens[1].Bounds.Width,Screen.AllScreens[1].Bounds.Height,PixelFormat.Format32bppArgb);
-            Graphics gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-            gfxScreenshot.CopyFromScreen(Screen.AllScreens[1].Bounds.X, Screen.AllScreens[1].Bounds.Y, 0, 0, Screen.AllScreens[1].Bounds.Size,
-                CopyPixelOperation.SourceCopy); //85, 46
-            textBox2.Text = Convert.ToString(bmpScreenshot.GetPixel(85,46));
             
         }
         private void SequenceBGWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             Sequential_Operations();
+            
         }
 
-        private void DebugButton_Click(object sender, EventArgs e)
-        {
-            CheckRefresh();
-        }
     }
 }
